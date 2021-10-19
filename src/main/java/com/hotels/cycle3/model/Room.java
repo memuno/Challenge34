@@ -27,31 +27,23 @@ public class Room implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	// field id primary keys
 	private Integer id;
-	// field name
 	private String name;
-	// field stars
 	private Integer stars;	
-	// field hotel
 	private String hotel;
-	// field description
 	private String description;
 	
-	// Relationship table: room to category table
 	@ManyToOne
     @JoinColumn(name = "categoryId")
     @JsonIgnoreProperties("rooms")
     private Category category;
 	
-	// Relationship table: room to message table
 	@OneToMany(cascade = {CascadeType.PERSIST},mappedBy="room")
-	@JsonIgnoreProperties("room")
-	private List<Message> Messages;
+	@JsonIgnoreProperties({"room", "client"})
+	private List<Message> messages;
 	
-	// Relationship table: room to Reservation table
 	@OneToMany(cascade = {CascadeType.PERSIST},mappedBy="room")
-	@JsonIgnoreProperties("room")
+	@JsonIgnoreProperties({"room", "client"})
 	private List<Reservation> reservations;
 
 	/**
@@ -142,14 +134,14 @@ public class Room implements Serializable {
 	 * @return the messages
 	 */
 	public List<Message> getMessages() {
-		return Messages;
+		return messages;
 	}
 
 	/**
 	 * @param messages the messages to set
 	 */
-	public void setMessages(List<Message> messages) {
-		Messages = messages;
+	public void setMessages(List<Message> message) {
+		messages = message;
 	}
 
 	/**

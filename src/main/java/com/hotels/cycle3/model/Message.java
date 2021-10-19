@@ -24,21 +24,17 @@ public class Message implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	// field id primary keys
 	private Integer idMessage;
-	// field messageText
 	private String messageText;
 	
-	// Relationship table: message to room table
 	@ManyToOne
-	@JoinColumn(name = "roomId")
-	@JsonIgnoreProperties("messages")
+	@JoinColumn(name = "id")
+	@JsonIgnoreProperties({"messages", "client","reservations"})
 	private Room room;
 	
-	// Relationship table: message to client table
 	@ManyToOne
 	@JoinColumn(name = "idClient")
-	@JsonIgnoreProperties("messages")
+	@JsonIgnoreProperties({"messages", "reservations", "client"})
 	private Client client;
 
 	/**

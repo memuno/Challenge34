@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /*
@@ -25,14 +24,11 @@ public class Category implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	// field id primary key
 	private Integer id;
-	// field category name
 	private String name;
-	// field category description
 	private String description;
 
-	// Relationship table: category to room table
+
 	@OneToMany(cascade = { CascadeType.PERSIST }, mappedBy = "category")
 	@JsonIgnoreProperties("category")
 	private List<Room> rooms;

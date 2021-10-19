@@ -24,25 +24,20 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Reservation implements Serializable {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	// field id Primary key
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private Integer idReservation;
-	// field start Date
 	private Date startDate;
-	// field devolutionDate
 	private Date devolutionDate;
-	// field reservation status
 	private String status = "created";
 
-	// Relationship table: reservation to client table
 	@ManyToOne
 	@JoinColumn(name = "idClient")
-	@JsonIgnoreProperties("reservations")
+	@JsonIgnoreProperties({"reservations", "messages"})
 	private Client client;
-	// Relationship table: reservation to room table
+
 	@ManyToOne
-	@JoinColumn(name = "roomId")
-	@JsonIgnoreProperties("rooms")
+	@JoinColumn(name = "id")
+	@JsonIgnoreProperties("reservations")
 	private Room room;
 	
 	private String score;
