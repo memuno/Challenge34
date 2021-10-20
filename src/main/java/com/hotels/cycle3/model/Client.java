@@ -26,20 +26,19 @@ public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer idClient;
-	private String name;
 	private String email;
 	private String password;
+	private String name;
 	private Integer age;
 	
 	@OneToMany(cascade = {CascadeType.PERSIST},mappedBy="client")
 	@JsonIgnoreProperties("client")
-	private List<Message> Messages;
-	
+	private List<Message> messages;
 
 	@OneToMany(cascade = {CascadeType.PERSIST},mappedBy="client")
 	@JsonIgnoreProperties("client")
 	private List<Reservation> reservations;
-
+	
 	/**
 	 * @return the idClient
 	 */
@@ -114,14 +113,14 @@ public class Client implements Serializable {
 	 * @return the messages
 	 */
 	public List<Message> getMessages() {
-		return Messages;
+		return messages;
 	}
 
 	/**
 	 * @param messages the messages to set
 	 */
-	public void setMessages(List<Message> messages) {
-		Messages = messages;
+	public void setMessages(List<Message> message) {
+		messages = message;
 	}
 
 	/**

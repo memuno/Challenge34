@@ -29,8 +29,8 @@ public class Room implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	private Integer stars;	
 	private String hotel;
+	private Integer stars;	
 	private String description;
 	
 	@ManyToOne

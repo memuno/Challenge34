@@ -1,7 +1,7 @@
 package com.hotels.cycle3.model;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,14 +31,14 @@ public class Reservation implements Serializable {
 	private String status = "created";
 
 	@ManyToOne
-	@JoinColumn(name = "idClient")
-	@JsonIgnoreProperties({"reservations", "messages"})
-	private Client client;
-
-	@ManyToOne
 	@JoinColumn(name = "id")
 	@JsonIgnoreProperties("reservations")
 	private Room room;
+	
+	@ManyToOne
+	@JoinColumn(name = "idClient")
+	@JsonIgnoreProperties({"reservations", "messages"})
+	private Client client;
 	
 	private String score;
 
