@@ -3,11 +3,13 @@ package com.hotels.cycle3.controller;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,25 +26,39 @@ import com.hotels.cycle3.services.ServiceCategory;
 
 @RestController
 @RequestMapping("/api/Category")
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+		RequestMethod.DELETE })
 public class ControllerCategory {
 
 	@Autowired
-    private ServiceCategory service;
-    @GetMapping("/all")
-    public List<Category> getCategory(){
-        return service.getAllCategory();
-    }
+	private ServiceCategory service;
 
-    @GetMapping("/{id}")
-    public Optional<Category> getCategory(@PathVariable("id") int categoryId) {
-        return service.getCategory(categoryId);
-    }
+	@GetMapping("/all")
+	public List<Category> getCategory() {
+		return service.getAllCategory();
+	}
 
-    @PostMapping("/save")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Category save(@RequestBody Category category) {
-        return service.saveCategory(category);
-    }
-    
+	@GetMapping("/{id}")
+	public Optional<Category> getCategory(@PathVariable("id") int categoryId) {
+		return service.getCategory(categoryId);
+	}
+
+	@PostMapping("/save")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Category save(@RequestBody Category category) {
+		return service.saveCategory(category);
+	}
+
+	@PutMapping("/update")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Category updateCategory(@RequestBody Category category) {
+		return service.updateCategory(category);
+	}
+
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public boolean deleteCategory(@PathVariable("id") int categoryId) {
+		return service.deleteCategory(categoryId);
+	}
+
 }

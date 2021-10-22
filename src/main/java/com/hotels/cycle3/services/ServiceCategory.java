@@ -53,5 +53,45 @@ public class ServiceCategory {
 			}
 		}
 	}
+	
+    /**
+	 * Method to Update specific item table Category
+	 * @return Update item Table Category
+	 */
+	
+	public Category updateCategory(Category category) {
+		if (category.getId() != null) {
+			Optional<Category> itemCategory = servCategory.getCategory(category.getId());
+			if (!itemCategory.isEmpty()) {
+				if (category.getDescription() != null) {
+					itemCategory.get().setDescription(category.getDescription());
+				}
+				if (category.getName() != null) {
+					itemCategory.get().setName(category.getName());
+				}
+				servCategory.saveCategory(itemCategory.get());
+				return itemCategory.get();
+			} else {
+				return category;
+			}
+		} else {
+			return category;
+		}
+
+	}
+
+	/**
+	 * Method to Delete specific item table Category
+	 * 
+	 * @return Delete item Table Category
+	 */
+
+	public boolean deleteCategory(int categoryId) {
+		Boolean item1Category = getCategory(categoryId).map(category -> {
+			servCategory.deleteCategory(category);
+			return true;
+		}).orElse(false);
+		return item1Category;
+	}
 
 }

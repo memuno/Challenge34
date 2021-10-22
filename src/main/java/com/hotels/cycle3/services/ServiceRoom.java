@@ -54,7 +54,54 @@ public class ServiceRoom {
 			}
 		}
 	}
+	
+	/**
+	 * Method to Update specific item table Room
+	 * 
+	 * @return Update item Table Room
+	 */
 
- 
+	public Room updateRoom(Room room) {
+		if (room.getId() != null) {
+			Optional<Room> itemRoom = servRoom.getRoom(room.getId());
+			if (!itemRoom.isEmpty()) {
+				if (room.getName() != null) {
+					itemRoom.get().setName(room.getName());
+				}
+				if (room.getHotel() != null) {
+					itemRoom.get().setHotel(room.getHotel());
+				}
+				if (room.getStars() != null) {
+					itemRoom.get().setStars(room.getStars());
+				}
+				if (room.getDescription() != null) {
+					itemRoom.get().setDescription(room.getDescription());
+				}
+				if (room.getCategory() != null) {
+					itemRoom.get().setCategory(room.getCategory());
+				}
+				servRoom.saveRoom(itemRoom.get());
+				return itemRoom.get();
+			} else {
+				return room;
+			}
+		} else {
+			return room;
+		}
+	}
+
+	/**
+	 * Method to Delete specific item table Room
+	 * 
+	 * @return Delete item Table Room
+	 */
+
+	public boolean deleteRoom(int roomId) {
+		Boolean item1Room = getRoom(roomId).map(room -> {
+			servRoom.deleteRoom(room);
+			return true;
+		}).orElse(false);
+		return item1Room;
+	}
 
 }
