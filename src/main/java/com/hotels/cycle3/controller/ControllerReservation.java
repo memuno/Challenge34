@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hotels.cycle3.model.Reservation;
+import com.hotels.cycle3.reports.CounterClients;
+import com.hotels.cycle3.reports.StatusReservation;
 import com.hotels.cycle3.services.ServiceReservation;
 
 /**
@@ -60,6 +62,23 @@ public class ControllerReservation {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public boolean deleteReservation(@PathVariable("id") int reservationId) {
 		return service.deleteReservation(reservationId);
+	}
+
+	@GetMapping("/report-status")
+	public StatusReservation getReservations() {
+		return service.getReportStatusReservations();
+	}
+
+	@GetMapping("/report-dates/{dateOne}/{dateTwo}")
+	public List<Reservation> getReservationByTime(@PathVariable("dateOne") String dateOne,
+			@PathVariable("dateTwo") String dateTwo) {
+		return service.getReportByTimeReservations(dateOne, dateTwo);
+	}
+
+	@GetMapping("/report-clients")
+	public List<CounterClients> getTopClients() {
+		return service.getReportTopClients();
+
 	}
 
 }

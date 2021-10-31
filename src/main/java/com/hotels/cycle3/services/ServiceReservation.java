@@ -1,5 +1,9 @@
 package com.hotels.cycle3.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hotels.cycle3.model.Reservation;
+import com.hotels.cycle3.reports.CounterClients;
+import com.hotels.cycle3.reports.StatusReservation;
 import com.hotels.cycle3.repository.ReservationRepository;
 
 /**
@@ -100,6 +106,51 @@ public class ServiceReservation {
 			return true;
 		}).orElse(false);
 		return item1Reservation;
+	}
+
+	/**
+	 * Method to extract Cancelled-Completed items table Reservation
+	 * 
+	 * @return object items: Cancelled and Completed Table Reservation
+	 */
+	public StatusReservation getReportStatusReservations() {
+		List<Reservation> completed = servReservation.statusReservation("completed");
+		List<Reservation> cancelled = servReservation.statusReservation("cancelled");
+		return new StatusReservation(completed.size(), cancelled.size());
+	}
+
+	/**
+	 * Method to extract report table Reservation
+	 * 
+	 * @return object items: reservations by date-one to date-Two Table Reservation
+	 */
+
+	public List<Reservation> getReportByTimeReservations(String dateIni, String dateEnd) {
+		SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateOne = new Date();
+		Date dateTwo = new Date();
+
+		try {
+			dateOne = parser.parse(dateIni);
+			dateTwo = parser.parse(dateEnd);
+		} catch (ParseException evt) {
+			evt.printStackTrace();
+		}
+		if (dateOne.before(dateTwo)) {
+			return servReservation.timeReservation(dateOne, dateTwo);
+		} else {
+			return new ArrayList<>();
+		}
+	}
+
+	/**
+	 * Method to extract report table Reservation
+	 * 
+	 * @return object items: reservations by clients with total reservations Table
+	 *         Reservation
+	 */
+	public List<CounterClients> getReportTopClients() {
+		return servReservation.getTopClients();
 	}
 
 }
